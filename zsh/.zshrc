@@ -58,7 +58,7 @@ function zle-keymap-select {
 zle -N zle-keymap-select
 
 # Zoxide (better cd)
-PATH="/home/mhmd/.local/bin:$PATH"
+PATH="$HOME/.local/bin:$PATH"
 eval "$(zoxide init zsh)"
 
 
