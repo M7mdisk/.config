@@ -17,7 +17,6 @@ call plug#begin()
 
 Plug 'navarasu/onedark.nvim'
 Plug 'dhruvasagar/vim-zoom'
-Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 
