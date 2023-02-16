@@ -1,0 +1,29 @@
+set hidden true
+map DD delete
+map . set hidden!
+
+cmd open &{{
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
+        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+
+set number
+set relativenumber
+
+cmd fuzzy_select $lf -remote "send $id select \"$(fzf --layout reverse)\""
+
+map f fuzzy_select
+map R reload
+map r push :rename<space>
+
+# WSL only
+map gc cd /mnt/c
+map gd cd /mnt/d
+
+map <m-down> down
+map <m-up> up
+map <m-1> open
+map <m-3> updir
+

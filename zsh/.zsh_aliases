@@ -1,0 +1,21 @@
+# Must have
+alias vim="nvim"
+alias ls="ls --color=auto"
+alias l="ls"
+alias ll="ls -la"
+
+# Git stuff
+alias lg="lazygit"
+alias g="git"
+alias gs="git status"
+alias gc="git commit -m"
+alias gl="git log"
+#
+# Tmux
+alias t="tmux"
+alias tls="tmux list-sessions"
+alias ta="tmux attach"
+
+# WSL Stuff
+alias c="cd /mnt/c"
+alias d="cd /mnt/d"
