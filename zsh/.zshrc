@@ -6,9 +6,13 @@ prompt adam1
 
 setopt histignorealldups sharehistory
 
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -v
+IN_VIM=$(ps -p $PPID -o comm= | grep -qsE '[gm]?vim' && echo 1)
+
+# Use vim bindings, except when we're actually in vim
+[ -z $IN_VIM ] && bindkey -v || bindkey -e
+
 bindkey '^R' history-incremental-search-backward
+bindkey '^S' history-incremental-search-forward
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
@@ -44,18 +48,18 @@ ZSH_THEME="oxide"
 source ~/.config/zsh/.zsh_aliases
 
 # Change cursor shape for different vi modes.
-function zle-keymap-select {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
-}
-zle -N zle-keymap-select
+# function zle-keymap-select {
+#   if [[ ${KEYMAP} == vicmd ]] ||
+#      [[ $1 = 'block' ]]; then
+#     echo -ne '\e[1 q'
+#   elif [[ ${KEYMAP} == main ]] ||
+#        [[ ${KEYMAP} == viins ]] ||
+#        [[ ${KEYMAP} = '' ]] ||
+#        [[ $1 = 'beam' ]]; then
+#     echo -ne '\e[5 q'
+#   fi
+# }
+# zle -N zle-keymap-select
 
 # Zoxide (better cd)
 PATH="$HOME/.local/bin:$PATH"
@@ -69,4 +73,7 @@ print() {
 fpath+=($HOME/.config/zsh/pure)
 autoload -U promptinit; promptinit
 prompt pure
+
+export FZF_DEFAULT_COMMAND="find \! \( -path '*/.git' -prune \) -printf '%P\n'"
+export FZF_COMPLETION_TRIGGER='~~'
 
