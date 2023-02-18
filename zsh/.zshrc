@@ -74,6 +74,6 @@ fpath+=($HOME/.config/zsh/pure)
 autoload -U promptinit; promptinit
 prompt pure
 
-export FZF_DEFAULT_COMMAND="find \! \( -path '*/.git' -prune \) -printf '%P\n'"
-export FZF_COMPLETION_TRIGGER='~~'
-
+EXCLUDED=('*/.git' '*/.cache' './.local/share')
+cmd=$(printf -- "-path '%s' -o " "${EXCLUDED[@]}" | cut -d' ' -f1-$((${#EXCLUDED[@]} * 3 - 1)))
+export FZF_DEFAULT_COMMAND="find \( $cmd \) -prune -o \! -type d -printf '%P\n'"
