@@ -3,12 +3,10 @@
 set -o xtrace -o errtrace -o errexit -o nounset -o pipefail
 
 cd $HOME
-sudo apt update && sudo apt upgrade
-sudo apt install zsh neovim zoxide fzf
 
 git clone --recurse-submodules -j8 git://github.com/M7mdisk/.config/
 
-sudo chsh -s /usr/bin/zsh
+chsh -s /usr/bin/zsh
 
 # Configure git and install lazygit
 git config --global user.email "M7md.k.isk@gmail.com"
@@ -25,7 +23,7 @@ rm lazygit.tar.gz lazygit
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-mkdir -p "~/.local/bin"
+mkdir -p "$HOME/.local/bin"
 version="$(curl --location --head https://github.com/gokcehan/lf/releases/latest | grep -i location: | sed 's/^.*\/tag\/\([^\/]*\)\r$/\1/')"
 filename="lf-linux-amd64.tar.gz"
 uri_to_download="https://github.com/gokcehan/lf/releases/download/${version}/${filename}"

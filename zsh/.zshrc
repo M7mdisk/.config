@@ -47,19 +47,19 @@ ZSH_THEME="oxide"
 
 source ~/.config/zsh/.zsh_aliases
 
-# Change cursor shape for different vi modes.
+# change cursor shape for different vi modes.
 # function zle-keymap-select {
-#   if [[ ${KEYMAP} == vicmd ]] ||
+#   if [[ ${keymap} == vicmd ]] ||
 #      [[ $1 = 'block' ]]; then
 #     echo -ne '\e[1 q'
-#   elif [[ ${KEYMAP} == main ]] ||
-#        [[ ${KEYMAP} == viins ]] ||
-#        [[ ${KEYMAP} = '' ]] ||
+#   elif [[ ${keymap} == main ]] ||
+#        [[ ${keymap} == viins ]] ||
+#        [[ ${keymap} = '' ]] ||
 #        [[ $1 = 'beam' ]]; then
 #     echo -ne '\e[5 q'
 #   fi
 # }
-# zle -N zle-keymap-select
+# zle -n zle-keymap-select
 
 # Zoxide (better cd)
 PATH="$HOME/.local/bin:$PATH"
