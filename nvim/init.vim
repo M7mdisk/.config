@@ -1,6 +1,7 @@
 let mapleader = ' '
 let maplocalleader = ' '
 
+set encoding=utf-8
 set number
 set autoindent
 set nocompatible
@@ -29,7 +30,8 @@ colorscheme onedark
 
 " Custom commands
 command Vimrc  tabe ~/.config/nvim/init.vim
-command TmuxConf  tabe ~/.tmux.conf
+command Zshrc  tabe ~/.config/zsh/.zshrc
+command TmuxConf  tabe ~/.config/tmux/tmux.conf
 command Reload so ~/.config/nvim/init.vim
 
 set ignorecase
@@ -44,6 +46,7 @@ nnoremap <Leader>R :Reload <CR>
 nnoremap <Leader>w :w <CR>
 nnoremap <Leader>q :q <CR>
 nnoremap <Leader>t :belowright split term://zsh <CR>
+nnoremap <leader>n :nohlsearch<CR>
 
 autocmd TermOpen * startinsert
 autocmd TermClose * execute 'bdelete! ' . expand('<abuf>')
@@ -63,3 +66,12 @@ set expandtab
 set noswapfile
 set relativenumber
 set termguicolors
+set cursorline
+set splitbelow
+set splitright
+
+" Folding
+set foldmethod=indent
+set foldlevel=99
+nnoremap <leader>aa za
+
