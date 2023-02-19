@@ -1,9 +1,5 @@
+source ~/.config/zsh/.zsh_aliases
 # Set up the prompt
-
-autoload -Uz promptinit
-promptinit
-prompt adam1
-
 setopt histignorealldups sharehistory
 
 IN_VIM=$(ps -p $PPID -o comm= | grep -qsE '[gm]?vim' && echo 1)
@@ -23,29 +19,10 @@ HISTFILE=~/.cache/.zsh_history
 autoload -Uz compinit
 compinit
 
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
-
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
 export EDITOR='nvim'
 
 ZSH_THEME="oxide"
 
-source ~/.config/zsh/.zsh_aliases
 
 # change cursor shape for different vi modes.
 # function zle-keymap-select {
@@ -68,12 +45,29 @@ eval "$(zoxide init zsh)"
 
 # This removes the newline between each prompt
 print() {
-  [ 0 -eq $# -a "prompt_pure_precmd" = "${funcstack[-1]}" ] || builtin print "$@";
+  [ 0 -eq $# -a "prompt_pure_precmd" = "${funcstack[-1]}" ] || builtin print -r "$@";
 }
 fpath+=($HOME/.config/zsh/pure)
 autoload -U promptinit; promptinit
-prompt pure
 
-EXCLUDED=('*/.git' '*/.cache' './.local/share')
+EXCLUDED=('*/.git' '*/.cache' '*/.local' '*/.virtualenvs' '*/.fonts')
 cmd=$(printf -- "-path '%s' -o " "${EXCLUDED[@]}" | cut -d' ' -f1-$((${#EXCLUDED[@]} * 3 - 1)))
 export FZF_DEFAULT_COMMAND="find \( $cmd \) -prune -o \! -type d -printf '%P\n'"
+prompt pure
+prompt_newline='%666v'
+PROMPT=" $PROMPT"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
+
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/dev
+[ -z $VIRTUAL_ENV ] && source /home/mhd/.local/bin/virtualenvwrapper_lazy.sh
+
+LFCD="$HOME/.config/lf/lfcd.sh"                                #  pre-built binary, make sure to use absolute path
+if [ -f "$LFCD" ]; then
+    source "$LFCD"
+fi
+bindkey -s '^o' 'lfcd\n'  # zsh
